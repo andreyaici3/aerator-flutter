@@ -6,6 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:switch_aerator/const.dart';
 import 'package:switch_aerator/dashboard.dart';
 import 'package:http/http.dart' as http;
+import 'package:fluttertoast/fluttertoast.dart';
 
 Future <void> main() async{
 
@@ -15,7 +16,7 @@ Future <void> main() async{
   var SessionID = prefs.getString('Session-ID');
 
   runApp(MaterialApp(
-    home: Login(),
+    home: SessionID != null ? Dashboard() : Login()
   ));
 }
 
@@ -38,10 +39,27 @@ class _LoginState extends State<Login> {
       prefs.setString('Session-ID', data["Session-ID"]);
 
       print("Login successfully!"); // Toast harusnya
-
+      Fluttertoast.showToast(
+          msg: "Login successfully",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.green,
+          textColor: Colors.white,
+          fontSize: 16.0
+      );
       Navigator.push(context, MaterialPageRoute(builder: (context) => Dashboard(),),);
     } else {
       print("Error : "+ data["message"]); // Toast juga
+      Fluttertoast.showToast(
+          msg: data["message"],
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0
+      );
     }
 
   }

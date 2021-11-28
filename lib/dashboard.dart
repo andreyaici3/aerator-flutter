@@ -4,6 +4,7 @@ import "package:flutter/material.dart";
 import 'package:shared_preferences/shared_preferences.dart';
 import "package:switch_aerator/const.dart";
 import "package:http/http.dart" as http;
+import 'package:fluttertoast/fluttertoast.dart';
 
 import 'main.dart';
 
@@ -141,10 +142,28 @@ class _HomeScreenState extends State<Dashboard> {
       if (dataResponse["status"] == true) {
         print(dataResponse["data"]);
 
+        Fluttertoast.showToast(
+            msg: dataResponse["data"],
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.CENTER,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.green,
+            textColor: Colors.white,
+            fontSize: 16.0
+        );
         getMachine();
       }else {
         print("Error : " + dataResponse["message"]);
 
+        Fluttertoast.showToast(
+            msg: dataResponse["message"],
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.CENTER,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.red,
+            textColor: Colors.white,
+            fontSize: 16.0
+        );
       }
 
     } catch (e) {
